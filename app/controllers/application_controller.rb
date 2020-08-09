@@ -7,6 +7,14 @@ class ApplicationController < Sinatra::Base
     end
 
     get '/' do
-        "It's Alive!"
+        erb :home
+    end
+
+    post '/login' do
+        binding.pry
+    end
+
+    post '/sign_up' do
+        binding.pry
     end
 end
