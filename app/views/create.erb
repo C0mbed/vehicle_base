@@ -6,18 +6,15 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
     <!-- Login Form -->
-    <form>
+    <form action="/home" method="post">
+      <input type="text" id="name" class="fadeIn first" name="name" placeholder="full name">
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
       <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 
-    <!-- Remind Passowrd -->
     <div id="formFooter">
-      <form method="post" action="/create">
         <input type="submit" class="fadeIn fourth" value="create new account">
-      </form>
     </div>
-
+    </form>
   </div>
 </div>

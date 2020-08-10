@@ -1,9 +1,10 @@
-<h1>Welcome to Vehicle Base</h1>
-<form method='post' action='/login'>
-    <input name="user_name" placeholder="email">
-    <input name="password" placeholder="password">
-    <button name="login">login</button>
-    <form action='sign_up' method='post'>
-        <button name="sign_up">sign up</button>
-    </form>
-</form>
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand" href="/">Vehicle Base</a>
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+      <li class="nav-item"><a class="nav-link" href="/cars">cars</a></li>
+      <li class="nav-item"><a class="nav-link" href="/new">new car</a></li>
+      <li class="nav-item"><a class="nav-link" href="/logout">logout</a></li>
+    </ul>
+  </div>
+</header>

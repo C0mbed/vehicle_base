@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
     binding.pry
   end
 
-  post '/sign_up' do
-    binding.pry
+  post '/create' do
+    erb :create
   end
 end
