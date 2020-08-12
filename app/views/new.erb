@@ -1,0 +1,24 @@
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+  <a class="navbar-brand" href="/">Vehicle Base</a>
+  <div class="navbar-nav-scroll">
+    <ul class="navbar-nav bd-navbar-nav flex-row">
+      <li class="nav-item"><a class="nav-link" href="/cars">cars</a></li>
+      <li class="nav-item"><a class="nav-link" href="/new">new car</a></li>
+      <li class="nav-item"><a class="nav-link" href="/logout">logout</a></li>
+    </ul>
+  </div>
+</header>
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- New Car Form -->
+    <form action="/new" method="post">
+      <input type="text" id="make" class="fadeIn second" name="make" placeholder="make">
+      <input type="text" id="model" class="fadeIn third" name="model" placeholder="model">
+      <input type="text" id="year" class="fadeIn second" name="year" placeholder="year">
+      <input type="text" id="color" class="fadeIn third" name="color" placeholder="color">
+      <input type="text" id="vin" class="fadeIn second" name="vin" placeholder="vin">
+      <input type="submit" class="fadeIn fourth" value="create car">
+    </form>
+  </div>
+</div>

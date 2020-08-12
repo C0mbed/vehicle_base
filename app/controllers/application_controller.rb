@@ -14,12 +14,37 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/login' do
-    @user = User.find(email: params[:user_name], password: params[:password])
-    session[:user_id] = @user.id
-    binding.pry
+    user = User.find_by(email: params[:login])
+    if user && user.authenticate(params[:password])
+      session[:user_id] = user.id
+      redirect "/home"
+    else
+      redirect "/"
+    end
   end
 
   post '/create' do
     erb :create
   end
+
+  get '/home' do
+    erb :home
+  end
+
+  post '/home' do
+    @user = User.new(name: params[:name], email: params[:login], password: params[:password])
+    @user.save
+    binding.pry
+    erb :home
+  end
+
+  get '/new' do
+    erb :new
+  end
+
+  post '/new' do
+    @vehicle =
+  end
+
+
 end

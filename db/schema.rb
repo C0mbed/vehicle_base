@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_09_200154) do
+ActiveRecord::Schema.define(version: 2020_08_11_105020) do
+
+  create_table "cars", force: :cascade do |t|
+    t.string "make"
+    t.string "model"
+    t.string "year"
+    t.string "vin"
+    t.string "color"
+    t.boolean "sold"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"

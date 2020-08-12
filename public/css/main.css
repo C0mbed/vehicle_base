@@ -44,7 +44,7 @@ header {
     text-decoration: none;
     color: #E63946;
 }
- .nav-link {
+.nav-link {
     color: #8d99ae!important;
 }
 
@@ -166,4 +166,3 @@ input[type=text]:focus {
 input[type=text]:placeholder {
     color: #cccccc;
 }
-
