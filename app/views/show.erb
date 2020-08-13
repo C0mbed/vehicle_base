@@ -1,22 +1,5 @@
-<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-  <a class="navbar-brand" href="/">Vehicle Base</a>
-  <div class="navbar-nav-scroll">
-    <ul class="navbar-nav bd-navbar-nav flex-row">
-      <li class="nav-item"><a class="nav-link" href="/cars">cars</a></li>
-      <li class="nav-item"><a class="nav-link" href="/new">new car</a></li>
-      <li class="nav-item"><a class="nav-link" href="/logout">logout</a></li>
-    </ul>
-  </div>
-</header>
-
-
-<div class="wrapper fadeInDown">
-  <div id="formContent">
-    <!-- Show Vehicle Details-->
-    <p class="fadeIn first">Make: <%=@vehicle.make%></p>
-    <p class="fadeIn second">Model: <%=@vehicle.model%></p>
-    <p class="fadeIn third">Year: <%=@vehicle.year%></p>
-    <p class="fadeIn fourth">Vin: <%=@vehicle.vin%></p>
-    <p class="fadeIn fifth">Color: <%=@vehicle.color%></p>
-  </div>
+<div class="card-vehicle-info">
+  <h5 class="card-title"><%=@vehicle.year%> <%=@vehicle.make%> <%=@vehicle.model%></h5>
+  <p class="card-content">Color: <%=@vehicle.color%></p>
+  <p>Vin: <%=@vehicle.vin%></p>
 </div>

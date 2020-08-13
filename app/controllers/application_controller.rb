@@ -17,7 +17,7 @@ class ApplicationController < Sinatra::Base
     user = User.find_by(email: params[:login])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect "/home/vehicles"
+      redirect "/vehicles"
     else
       redirect "/"
     end
@@ -27,7 +27,7 @@ class ApplicationController < Sinatra::Base
     erb :create
   end
 
-  get '/home/vehicles' do
+  get '/vehicles' do
     @vehicles = Vehicle.all
     @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
     if @my_vehicles.length > 0
@@ -62,6 +62,19 @@ class ApplicationController < Sinatra::Base
   get "/logout" do
     session.clear
     redirect "/"
+  end
+
+  get '/vehicles/:id' do
+    @vehicle = Vehicle.find(params[:id])
+
+    erb :show
+  end
+
+  delete '/vehicles/:id/delete' do
+    @article = Article.find(params[:id])
+    @article.destroy
+
+    erb :delete
   end
 
 end

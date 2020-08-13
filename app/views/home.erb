@@ -3,10 +3,9 @@
   <%@my_vehicles.each do |vehicle|%>
     <!--<section class="wrapper fadeInDown card">-->
       <div class="card-vehicle-info">
-        <h5 class="card-title"><%=vehicle.year%> <%=vehicle.make%> <%=vehicle.model%></h5>
+        <h5 class="card-title"><a href="/vehicles/<%=vehicle.id%>" class="card-link"><%=vehicle.year%> <%=vehicle.make%> <%=vehicle.model%></a></h5>
         <p class="card-content">Color: <%=vehicle.color%></p>
         <p>Vin: <%=vehicle.vin%></p>
-        <p class="card-links"></p><a href="#" class="card-link">edit vehicle</a><a href="#" class="card-link">remove vehicle</a></p>
       </div>
   <%end%>
 <%end%>
