@@ -52,11 +52,7 @@ class ApplicationController < Sinatra::Base
     @vehicle = Vehicle.create(params)
     @vehicle.user_id = session[:user_id]
     @vehicle.save
-    redirect "home/vehicles/"
-  end
-
-  get '/cars' do
-    redirect 'home/vehicles'
+    redirect "/vehicles"
   end
 
   get "/logout" do
@@ -71,10 +67,10 @@ class ApplicationController < Sinatra::Base
   end
 
   delete '/vehicles/:id/delete' do
-    @article = Article.find(params[:id])
-    @article.destroy
+    @vehicle = Vehicle.find(params[:id])
+    @vehicle.destroy
 
-    erb :delete
+    redirect '/vehicles'
   end
 
 end

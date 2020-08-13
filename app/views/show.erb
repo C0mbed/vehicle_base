@@ -2,4 +2,14 @@
   <h5 class="card-title"><%=@vehicle.year%> <%=@vehicle.make%> <%=@vehicle.model%></h5>
   <p class="card-content">Color: <%=@vehicle.color%></p>
   <p>Vin: <%=@vehicle.vin%></p>
+
+
+  <form action="/vehicles/<%=@vehicle.id%>/edit" method="post">
+    <input type=submit name="edit" value="edit">
+  </form>
+  <form action="/vehicles/<%=@vehicle.id%>/delete" method="post">
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <input type=submit name="delete" value="delete">
+  </form>
+
 </div>
