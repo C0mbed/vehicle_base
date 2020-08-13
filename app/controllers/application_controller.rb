@@ -66,6 +66,20 @@ class ApplicationController < Sinatra::Base
     erb :show
   end
 
+  post '/vehicles/:id/edit' do
+    @vehicle = Vehicle.find(params[:id])
+
+    erb :edit
+  end
+
+  patch '/vehicles/:id/edit' do
+    original_vehicle = Vehicle.find(params[:id])
+    original_vehicle.update(year: params[:year], make: params[:make], model: params[:model], color: params[:color], vin: params[:vin])
+
+    redirect "/vehicles"
+  end
+
+
   delete '/vehicles/:id/delete' do
     @vehicle = Vehicle.find(params[:id])
     @vehicle.destroy

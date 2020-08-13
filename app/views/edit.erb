@@ -1,0 +1,14 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Edit Vehicle Form -->
+    <form action="/vehicles/<%=@vehicle.id%>/edit" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch">
+      <input type="text" id="year" class="fadeIn first" name="year" value="<%=@vehicle.year%>">
+      <input type="text" id="make" class="fadeIn second" name="make" value="<%=@vehicle.make%>">
+      <input type="text" id="model" class="fadeIn third" name="model" value="<%=@vehicle.model%>">
+      <input type="text" id="color" class="fadeIn fourth" name="color" value="<%=@vehicle.color%>">
+      <input type="text" id="vin" class="fadeIn fifth" name="vin" value="<%=@vehicle.vin%>">
+      <input type="submit" class="fadeIn sixth" value="update vehicle">
+    </form>
+  </div>
+</div>
