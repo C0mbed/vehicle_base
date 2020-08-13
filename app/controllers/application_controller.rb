@@ -30,8 +30,11 @@ class ApplicationController < Sinatra::Base
   get '/home/vehicles' do
     @vehicles = Vehicle.all
     @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
-
-    erb :home
+    if @my_vehicles.length > 0
+      erb :home
+    else
+      erb :new
+    end
   end
 
   post '/home' do
@@ -49,17 +52,16 @@ class ApplicationController < Sinatra::Base
     @vehicle = Vehicle.create(params)
     @vehicle.user_id = session[:user_id]
     @vehicle.save
-    redirect "home/vehicles/#{@vehicle.id}"
-  end
-
-  get 'home/vehicles/:id' do
-    @vehicle = Vehicle.find(params[:id])
-    binding.pry
-    erb :show
+    redirect "home/vehicles/"
   end
 
   get '/cars' do
-    redirect '/home/vehicles'
+    redirect 'home/vehicles'
+  end
+
+  get "/logout" do
+    session.clear
+    redirect "/"
   end
 
 end
