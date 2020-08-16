@@ -15,7 +15,11 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/' do
-    erb :login
+    if logged_in?
+      redirect '/vehicles'
+    else
+      erb :login
+    end
     #fix and validate empty username or password - use ActiveRecord Validations
   end
 
@@ -26,7 +30,7 @@ class ApplicationController < Sinatra::Base
       session[:user_id] = user.id
       redirect '/vehicles'
     else
-      redirect '/'
+      erb :authorize
     end
   end
 
