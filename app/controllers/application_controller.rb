@@ -5,9 +5,9 @@ class ApplicationController < Sinatra::Base
     set :public_folder, 'public'
     set :views, 'app/views'
     enable :sessions
-    set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+    #set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+    set :session_secret, "go for gold"
     set layout: true
-    binding.pry
   end
 
   get '/' do
@@ -20,10 +20,9 @@ class ApplicationController < Sinatra::Base
     user = User.find_by(email: params[:login])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      binding.pry
-      redirect "/vehicles"
+      redirect '/vehicles'
     else
-      redirect "/"
+      redirect '/'
     end
   end
 
@@ -57,18 +56,21 @@ class ApplicationController < Sinatra::Base
     @vehicle = Vehicle.create(params)
     @vehicle.user_id = session[:user_id]
     @vehicle.save
-    redirect "/vehicles"
+    redirect '/vehicles'
   end
 
-  get "/logout" do
+  get '/logout' do
     session.clear
-    redirect "/"
+    redirect '/'
   end
 
   get '/vehicles/:id' do
     @vehicle = Vehicle.find(params[:id])
-
-    erb :show
+    if current_user
+      erb :show
+    else
+      erb :authorize
+    end
   end
 
   #change to get in both vehicles/:id and below
@@ -83,7 +85,7 @@ class ApplicationController < Sinatra::Base
     original_vehicle = Vehicle.find(params[:id])
     original_vehicle.update(year: params[:year], make: params[:make], model: params[:model], color: params[:color], vin: params[:vin])
 
-    redirect "/vehicles"
+    redirect '/vehicles'
   end
 
 
@@ -93,6 +95,16 @@ class ApplicationController < Sinatra::Base
     @vehicle.destroy
 
     redirect '/vehicles'
+  end
+
+  helpers do
+    def logged_in?
+      !!session[:user_id]
+    end
+
+    def current_user
+      User.find(session[:user_id])
+    end
   end
 
 end
