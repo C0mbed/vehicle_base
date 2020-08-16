@@ -18,7 +18,7 @@ class ApplicationController < Sinatra::Base
     if logged_in?
       redirect '/vehicles'
     else
-      erb :login
+      erb :'user/login'
     end
   end
 
@@ -28,12 +28,12 @@ class ApplicationController < Sinatra::Base
       session[:user_id] = @user.id
       redirect '/vehicles'
     else
-      erb :authorize
+      erb :'user/authorize'
     end
   end
 
   post '/create' do
-    erb :create
+    erb :'user/create'
   end
 
   get '/vehicles' do
@@ -41,12 +41,12 @@ class ApplicationController < Sinatra::Base
       @vehicles = Vehicle.all
       @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
       if @my_vehicles.length > 0
-        erb :home
+        erb :'vehicle/home'
       else
-        erb :new
+        erb :'vehicle/new'
       end
     else
-      erb :authorize
+      erb :'user/authorize'
     end
   end
 
@@ -58,7 +58,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/vehicles/new' do
-    erb :new
+    erb :'vehicle/new'
   end
 
   post '/new' do
@@ -76,16 +76,16 @@ class ApplicationController < Sinatra::Base
   get '/vehicles/:id' do
     @vehicle = Vehicle.find(params[:id])
     if current_user.id == @vehicle.user_id
-      erb :show
+      erb :'vehicle/show'
     else
-      erb :authorize
+      erb :'user/authorize'
     end
   end
 
   get '/vehicles/:id/edit' do
     @vehicle = Vehicle.find(params[:id])
 
-    erb :edit
+    erb :'vehicle/edit'
   end
 
   patch '/vehicles/:id/edit' do
@@ -95,7 +95,7 @@ class ApplicationController < Sinatra::Base
 
       redirect '/vehicles'
     else
-      erb :authorize
+      erb :'user/authorize'
     end
   end
 
@@ -107,7 +107,7 @@ class ApplicationController < Sinatra::Base
 
       redirect '/vehicles'
     else
-      erb :authorize
+      erb :'user/authorize'
     end
   end
 

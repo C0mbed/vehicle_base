@@ -1,6 +1,6 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
-    <!-- Edit Vehicle Form -->
+    <!-- Edit vehicle Form -->
     <form action="/vehicles/<%=@vehicle.id%>/edit" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch">
       <input type="text" id="year" class="fadeIn first" name="year" value="<%=@vehicle.year%>">
