@@ -50,7 +50,7 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  post '/home' do
+  post '/vehicles' do
     @user = User.new(name: params[:name], email: params[:login], password: params[:password])
     @user.save
 
@@ -61,7 +61,7 @@ class ApplicationController < Sinatra::Base
     erb :'vehicle/new'
   end
 
-  post '/new' do
+  post '/vehicles/new' do
     @vehicle = Vehicle.create(params)
     @vehicle.user_id = session[:user_id]
     @vehicle.save
@@ -99,7 +99,6 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-
   delete '/vehicles/:id/delete' do
     @vehicle = Vehicle.find(params[:id])
     if current_user.id == @vehicle.id
@@ -108,16 +107,6 @@ class ApplicationController < Sinatra::Base
       redirect '/vehicles'
     else
       erb :'user/authorize'
-    end
-  end
-
-  helpers do
-    def logged_in?
-      !!session[:user_id]
-    end
-
-    def current_user
-      User.find(session[:user_id]) if session[:user_id]
     end
   end
 
