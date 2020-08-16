@@ -11,7 +11,8 @@ gem 'sinatra'
 gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
 gem 'sqlite3'
 gem 'bcrypt'
-gem 'httparty'
+gem 'sysrandom'
+gem 'dotenv'
 
 group :development, :test do
   gem 'pry'
