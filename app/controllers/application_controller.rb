@@ -1,13 +1,17 @@
 require_relative '../../config/environment'
 
 class ApplicationController < Sinatra::Base
+
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
-    enable :sessions
     #set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
-    set :session_secret, "go for gold"
     set layout: true
+    use Rack::Session::Cookie, :key => 'rack.session',
+        :path => '/',
+        :expire_after => 2592000, # In seconds
+        :secret => "6dd501044121ee37f33d691bc79c672c0c4d0c34ad3ceebac5d1b658542f621cfba2f01a718e6164441705d74c934b29b4e2fa9b8e9b3278df38534182b15e21"
+
   end
 
   get '/' do
@@ -66,26 +70,28 @@ class ApplicationController < Sinatra::Base
 
   get '/vehicles/:id' do
     @vehicle = Vehicle.find(params[:id])
-    if current_user
+    if current_user.id == @vehicle.user_id
       erb :show
     else
       erb :authorize
     end
   end
 
-  #change to get in both vehicles/:id and below
-  post '/vehicles/:id/edit' do
+  get '/vehicles/:id/edit' do
     @vehicle = Vehicle.find(params[:id])
 
     erb :edit
   end
 
   patch '/vehicles/:id/edit' do
-    #check current user against vehicle.user_id
-    original_vehicle = Vehicle.find(params[:id])
-    original_vehicle.update(year: params[:year], make: params[:make], model: params[:model], color: params[:color], vin: params[:vin])
+    if current_user == session[user_id]
+      original_vehicle = Vehicle.find(params[:id])
+      original_vehicle.update(year: params[:year], make: params[:make], model: params[:model], color: params[:color], vin: params[:vin])
 
-    redirect '/vehicles'
+      redirect '/vehicles'
+    else
+      erb :authorize
+    end
   end
 
 

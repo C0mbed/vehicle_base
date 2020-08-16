@@ -4,7 +4,7 @@
   <p>Vin: <%=@vehicle.vin%></p>
 
 
-  <form action="/vehicles/<%=@vehicle.id%>/edit" method="post">
+  <form action="/vehicles/<%=@vehicle.id%>/edit" method="get">
     <input type=submit name="edit" value="edit">
   </form>
   <form action="/vehicles/<%=@vehicle.id%>/delete" method="post">
