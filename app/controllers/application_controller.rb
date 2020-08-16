@@ -22,7 +22,7 @@ class ApplicationController < Sinatra::Base
     #validate users
   post '/login' do
     user = User.find_by(email: params[:login])
-    if user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
       session[:user_id] = user.id
       redirect '/vehicles'
     else
@@ -36,12 +36,16 @@ class ApplicationController < Sinatra::Base
 
     #Helper Method Current User && Is Logged in?
   get '/vehicles' do
-    @vehicles = Vehicle.all
-    @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
-    if @my_vehicles.length > 0
-      erb :home
+    if logged_in?
+      @vehicles = Vehicle.all
+      @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
+      if @my_vehicles.length > 0
+        erb :home
+      else
+        erb :new
+      end
     else
-      erb :new
+      erb :authorize
     end
   end
 
