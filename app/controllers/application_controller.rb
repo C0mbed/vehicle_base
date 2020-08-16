@@ -20,14 +20,12 @@ class ApplicationController < Sinatra::Base
     else
       erb :login
     end
-    #fix and validate empty username or password - use ActiveRecord Validations
   end
 
-    #validate users
   post '/login' do
-    user = User.find_by(email: params[:login])
-    if user&.authenticate(params[:password])
-      session[:user_id] = user.id
+    @user = User.find_by(email: params[:login])
+    if @user&.authenticate(params[:password])
+      session[:user_id] = @user.id
       redirect '/vehicles'
     else
       erb :authorize
@@ -38,7 +36,6 @@ class ApplicationController < Sinatra::Base
     erb :create
   end
 
-    #Helper Method Current User && Is Logged in?
   get '/vehicles' do
     if logged_in?
       @vehicles = Vehicle.all
@@ -57,7 +54,7 @@ class ApplicationController < Sinatra::Base
     @user = User.new(name: params[:name], email: params[:login], password: params[:password])
     @user.save
 
-    erb :home
+    redirect '/vehicles/new'
   end
 
   get '/vehicles/new' do
@@ -92,8 +89,8 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/vehicles/:id/edit' do
-    if current_user == session[user_id]
-      original_vehicle = Vehicle.find(params[:id])
+    original_vehicle = Vehicle.find(params[:id])
+    if current_user.id == original_vehicle.user_id
       original_vehicle.update(year: params[:year], make: params[:make], model: params[:model], color: params[:color], vin: params[:vin])
 
       redirect '/vehicles'
@@ -104,11 +101,14 @@ class ApplicationController < Sinatra::Base
 
 
   delete '/vehicles/:id/delete' do
-    #check current user against vehicle.user_id
     @vehicle = Vehicle.find(params[:id])
-    @vehicle.destroy
+    if current_user.id == @vehicle.id
+      @vehicle.destroy
 
-    redirect '/vehicles'
+      redirect '/vehicles'
+    else
+      erb :authorize
+    end
   end
 
   helpers do
@@ -117,7 +117,7 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      User.find(session[:user_id])
+      User.find(session[:user_id]) if session[:user_id]
     end
   end
 
