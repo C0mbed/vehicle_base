@@ -9,6 +9,9 @@
       <input type="text" id="color" class="fadeIn fourth" name="color" value="<%=@vehicle.color%>">
       <input type="text" id="vin" class="fadeIn fifth" name="vin" value="<%=@vehicle.vin%>">
       <input type="submit" class="fadeIn sixth" value="update vehicle">
+      <form action="/vehicles" method="get">
+        <input type="submit" class="fadeIn sixth" value="cancel">
+      </form>
     </form>
   </div>
 </div>
