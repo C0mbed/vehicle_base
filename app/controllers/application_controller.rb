@@ -31,8 +31,15 @@ class ApplicationController < Sinatra::Base
     end
   end
 
-  post '/create' do
+  get '/user/create' do
     erb :'user/create'
   end
+
+  post '/user/create' do
+    @user = User.create(name: params[:name], email: params[:login], password: params[:password])
+    #@user.save
+    redirect '/vehicles/new'
+  end
+
 
 end

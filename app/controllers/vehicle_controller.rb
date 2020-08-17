@@ -5,7 +5,7 @@ class VehicleController < Sinatra::Base
   configure do
     set :public_folder, 'public'
     set :views, 'app/views'
-    #set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+    # set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
     set layout: true
     use Rack::Session::Cookie, :key => 'rack.session',
         :path => '/',
@@ -15,9 +15,7 @@ class VehicleController < Sinatra::Base
 
   get '/vehicles' do
     if logged_in?
-      @vehicles = Vehicle.all
-      #change to activerecord
-      @my_vehicles = @vehicles.select { |v| v.user_id == session[:user_id] }
+      @my_vehicles = Vehicle.where(user_id: session[:user_id])
       if @my_vehicles.length > 0
         erb :'vehicle/home'
       else
@@ -26,13 +24,6 @@ class VehicleController < Sinatra::Base
     else
       erb :'user/authorize'
     end
-  end
-
-  post '/vehicles' do
-    @user = User.new(name: params[:name], email: params[:login], password: params[:password])
-    @user.save
-
-    redirect '/vehicles/new'
   end
 
   get '/vehicles/new' do
