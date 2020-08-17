@@ -9,7 +9,7 @@ class VehicleController < Sinatra::Base
     set layout: true
     use Rack::Session::Cookie, :key => 'rack.session',
         :path => '/',
-        :expire_after => 2592000, # In seconds
+        :expire_after => 1200, # In seconds
         :secret => "6dd501044121ee37f33d691bc79c672c0c4d0c34ad3ceebac5d1b658542f621cfba2f01a718e6164441705d74c934b29b4e2fa9b8e9b3278df38534182b15e21"
   end
 
