@@ -37,11 +37,6 @@ class VehicleController < Sinatra::Base
     redirect '/vehicles'
   end
 
-  get '/logout' do
-    session.clear
-    redirect '/'
-  end
-
   get '/vehicles/:id' do
     @vehicle = Vehicle.find(params[:id])
     if current_user.id == @vehicle.user_id

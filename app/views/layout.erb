@@ -20,9 +20,10 @@
   <%if logged_in?%>
     <div class="navbar-nav-scroll">
       <ul class="navbar-nav bd-navbar-nav flex-row">
+        <%@user = current_user%>
         <li class="nav-item"><a class="nav-link" href="/vehicles/new">new car</a></li>
-        <%user = current_user%>
-        <%user = user.name.split(' ') %>
+        <li class="nav-item"><a class="nav-link" href="/user/<%=@user.id%>">account</a></li>
+        <%user = @user.name.split(' ')%>
         <li class="nav-item"><a class="nav-link" href="/logout">logout <%=user[0]%></a></li>
       </ul>
     </div>

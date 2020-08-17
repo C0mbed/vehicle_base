@@ -37,9 +37,40 @@ class UserController < Sinatra::Base
 
   post '/user/create' do
     @user = User.create(name: params[:name], email: params[:login], password: params[:password])
-    #@user.save
     redirect '/vehicles/new'
   end
 
+  get '/user/:id' do
+    @user = User.find(params[:id])
+    if current_user.id == @user.id
+      erb :'user/show'
+    else
+      erb :'user/authorize'
+    end
+  end
 
+  get '/user/:id/edit' do
+    @user = User.find(params[:id])
+    if current_user.id == @user.id
+      erb :'user/edit'
+    else
+      erb :'user/authorize'
+    end
+  end
+
+  patch '/user/:id/edit' do
+    original_user = User.find(params[:id])
+    if current_user.id == original_user.id && original_user.authenticate(params[:old_password])
+      original_user.update(name: params[:name], email: params[:login], password: params[:new_password])
+
+      redirect '/vehicles'
+    else
+      erb :'user/authorize'
+    end
+  end
+
+  get '/logout' do
+    session.clear
+    redirect '/'
+  end
 end

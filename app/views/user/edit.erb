@@ -1,0 +1,19 @@
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+    <!-- Login Form -->
+    <form action="/user/<%=@user.id%>/edit" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch">
+      <input type="text" id="name" class="fadeIn first" name="name" value="<%=@user.name%>">
+      <input type="text" id="login" class="fadeIn second" name="login" value="<%=@user.email%>">
+      <input type="password" id="password" class="fadeIn third" name="old_password" placeholder="old password">
+      <input type="password" id="password" class="fadeIn third" name="new_password" placeholder="new password">
+
+      <div id="formFooter">
+        <input type="submit" class="fadeIn fourth" value="update account">
+      </div>
+      <form action="/vehicles" method="get">
+        <input type="submit" class="fadeIn sixth" value="cancel">
+      </form>
+    </form>
+  </div>
+</div>
