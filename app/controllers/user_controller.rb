@@ -11,18 +11,14 @@ class UserController < Sinatra::Base
   end
 
   get '/' do
-    if logged_in?
-      redirect '/vehicles'
-    else
-      erb :'user/login'
-    end
+    session.clear
+    erb :'user/login'
   end
 
   post '/login' do
     @user = User.find_by(email: params[:login])
     if @user&.authenticate(params[:password])
-      @session = session
-      @session[:user_id] = @user.id
+      session[:user_id] = @user.id
       redirect '/vehicles'
     else
       erb :'user/authorize'
@@ -34,8 +30,14 @@ class UserController < Sinatra::Base
   end
 
   post '/user/create' do
-    @user = User.create(name: params[:name], email: params[:login], password: params[:password])
-    redirect '/vehicles/new'
+    @user = User.new(name: params[:name], email: params[:login], password: params[:password])
+    @user.save
+    if @user&.authenticate(params[:password])
+      session[:user_id] = @user.id
+      redirect '/vehicles'
+    else
+      erb :'user/authorize'
+    end
   end
 
   get '/user/:id' do

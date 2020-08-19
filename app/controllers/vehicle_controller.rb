@@ -31,7 +31,6 @@ class VehicleController < Sinatra::Base
     @vehicle = Vehicle.create(params)
     @vehicle.user_id = session[:user_id]
     @vehicle.save
-
     redirect '/vehicles'
   end
 
