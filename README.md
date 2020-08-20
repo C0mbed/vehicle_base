@@ -25,3 +25,7 @@ To install this gem onto your local machine, run bundle exec rake install. To re
 ## License
 
 The gem is available as open source under the terms of the MIT License.
+
+## Code of Conduct
+
+Everyone interacting in C0mbed codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/C0mbed/vehicle_base/blob/master/CODE_OF_CONDUCT.md).
