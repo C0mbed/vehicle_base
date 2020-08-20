@@ -1,4 +1,6 @@
 require_relative '../../config/environment'
+require 'sinatra'
+require 'sinatra/flash'
 
 class UserController < Sinatra::Base
 
@@ -8,20 +10,25 @@ class UserController < Sinatra::Base
     enable :sessions
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
     set layout: true
+    register Sinatra::Flash
   end
 
   get '/' do
-    session.clear
     erb :'user/login'
   end
 
   post '/login' do
     @user = User.find_by(email: params[:login])
     if @user&.authenticate(params[:password])
+      flash[:notice] = ''
       session[:user_id] = @user.id
       redirect '/vehicles'
+    elsif @user.nil?
+      flash[:error] = "#{params[:login]} not found, please create a new account"
+      redirect '/'
     else
-      erb :'user/authorize'
+      flash[:error] = 'incorrect email or password'
+      redirect '/'
     end
   end
 
@@ -31,21 +38,12 @@ class UserController < Sinatra::Base
 
   post '/user/create' do
     @user = User.new(name: params[:name], email: params[:login], password: params[:password])
-    @user.save
-    if @user&.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect '/vehicles'
+    if @user.save == true
+      flash[:notice] = 'Account successfully created, please login'
+      redirect '/'
     else
-      erb :'user/authorize'
-    end
-  end
-
-  get '/user/:id' do
-    @user = User.find(params[:id])
-    if current_user.id == @user.id
-      erb :'user/show'
-    else
-      erb :'user/authorize'
+      flash[:error] = 'all fields required for account creation'
+      redirect '/user/create'
     end
   end
 
@@ -62,15 +60,18 @@ class UserController < Sinatra::Base
     original_user = User.find(params[:id])
     if current_user.id == original_user.id && original_user.authenticate(params[:old_password])
       original_user.update(name: params[:name], email: params[:login], password: params[:new_password])
+      flash[:notice] = 'account successfully updated'
 
       redirect '/vehicles'
     else
-      erb :'user/authorize'
+      flash[:error] = 'old password is incorrect'
+      redirect "/user/#{current_user.id}/edit"
     end
   end
 
   get '/logout' do
     session.clear
+    flash[:notice] = 'successfully logged out'
     redirect '/'
   end
 end

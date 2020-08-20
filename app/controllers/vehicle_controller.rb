@@ -1,4 +1,6 @@
 require_relative '../../config/environment'
+require 'sinatra'
+require 'sinatra/flash'
 
 class VehicleController < Sinatra::Base
 
@@ -8,6 +10,7 @@ class VehicleController < Sinatra::Base
     enable :sessions
     set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
     set layout: true
+    register Sinatra::Flash
   end
 
   get '/vehicles' do

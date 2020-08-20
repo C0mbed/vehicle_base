@@ -12,8 +12,8 @@ header {
 }
 
 section {
-    height: 200px !important;
-    width: 33% !important;
+    height: 50px;
+    width: 100%
 }
 
 .navbar {
@@ -91,8 +91,28 @@ section {
     padding: 10px;
 }
 
+.error {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padidng: 10px;
+    color: #E63946;
+}
+
+.notice {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padidng: 10px;
+    color: #03fc6b;
+}
+
 #formContent {
-    margin-top: 40px;
+    margin-top: 10px;
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
     background: #fff;

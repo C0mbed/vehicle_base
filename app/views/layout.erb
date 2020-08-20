@@ -16,22 +16,34 @@
 
 <!--header-->
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
-  <a class="navbar-brand" href="/">Vehicle Base</a>
   <%if logged_in?%>
+    <a class="navbar-brand" href="/vehicles">Vehicle Base</a>
     <div class="navbar-nav-scroll">
       <ul class="navbar-nav bd-navbar-nav flex-row">
         <%@user = current_user%>
         <li class="nav-item"><a class="nav-link" href="/vehicles/new">new car</a></li>
-        <li class="nav-item"><a class="nav-link" href="/user/<%=@user.id%>">account</a></li>
+        <li class="nav-item"><a class="nav-link" href="/user/<%=@user.id%>/edit">account</a></li>
         <%user = @user.name.split(' ')%>
         <li class="nav-item"><a class="nav-link" href="/logout">logout <%=user[0]%></a></li>
       </ul>
     </div>
-  <%end%>
+  <% else %>
+    <a class="navbar-brand" href="/">Vehicle Base</a>
+  <% end %>
 </header>
 
 <!--#View container-->
 <%= yield %>
+
+<% if flash[:notice]%>
+  <div id='flash' class='notice'>
+    <p><%= flash[:notice] %></p>
+  </div>
+<% else %>
+  <div id='flash' class='error'>
+    <p><%= flash[:error] %></p>
+  </div>
+<% end %>
 
 <!--JS-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
