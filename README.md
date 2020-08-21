@@ -12,7 +12,7 @@ Key Features:
 
 ## Installation & Usage
 1. Clone this repository;
-2. From the local directory you closed this repository to, type ```bundle install``` to install the required gems.  
+2. From the local directory you cloned this repository to, type ```bundle install``` to install the required gems.  
 3. From the command line type ```shotgun``` and cmd-click on the link (mac) in the console or navigate to [http://localhost:9393/](http://localhost:9393/).
 4. Create a new user and enjoy!  
 
